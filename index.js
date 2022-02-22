@@ -1,6 +1,7 @@
 // TODO: Include packages needed for this application
 const fs = require("fs");
 const inquirer = require("inquirer");
+const mdGenerator = require("./utils/generateMarkdown.js");
 let projectInfo = [];
 let featureList = [];
 // TODO: Create an array of questions for user input
@@ -9,7 +10,7 @@ const promptProjectInfo = () => {
     .prompt([
       {
         type: "input",
-        name: "project-title",
+        name: "projectTitle",
         message: "What is the name of your project?",
         validate: (nameInput) => {
           if (nameInput) {
@@ -85,7 +86,8 @@ const promptProjectInfo = () => {
     ])
     .then((answers) => {
       projectInfo = answers;
-      console.log(projectInfo);
+      let textContent = mdGenerator(projectInfo);
+      writeToFile("test.md", textContent);
     })
     .catch((error) => {
       if (error.isTtyError) {
@@ -97,7 +99,9 @@ const promptProjectInfo = () => {
 };
 
 // TODO: Create a function to write README file
-function writeToFile(fileName, data) {}
+function writeToFile(fileName, data) {
+  fs.writeFile(fileName, data, (err) => {});
+}
 
 // TODO: Create a function to initialize app
 function init() {
