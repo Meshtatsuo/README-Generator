@@ -10,7 +10,7 @@ const promptProjectInfo = () => {
     .prompt([
       {
         type: "input",
-        name: "projectTitle",
+        name: "title",
         message: "What is the name of your project?",
         validate: (nameInput) => {
           if (nameInput) {
@@ -23,7 +23,7 @@ const promptProjectInfo = () => {
       },
       {
         type: "input",
-        name: "project-description",
+        name: "description",
         message: "Please enter a brief description of your project.",
         validate: (input) => {
           if (input) {
@@ -36,29 +36,13 @@ const promptProjectInfo = () => {
       },
       {
         type: "input",
-        name: "install-instructions",
+        name: "install",
         message: "Please enter installation instructions.",
-        validate: (input) => {
-          if (input) {
-            return true;
-          } else {
-            console.log("Please enter installation instructions!");
-            return false;
-          }
-        },
       },
       {
         type: "input",
         name: "usage",
         message: "Please describe how to use the software.",
-        validate: (input) => {
-          if (input) {
-            return true;
-          } else {
-            console.log("Please enter usage instructions!");
-            return false;
-          }
-        },
       },
       {
         type: "input",
@@ -67,7 +51,7 @@ const promptProjectInfo = () => {
       },
       {
         type: "input",
-        name: "test-instructions",
+        name: "testInstructions",
         message: "Please provide testing instructions.",
       },
       {
@@ -85,22 +69,29 @@ const promptProjectInfo = () => {
       },
     ])
     .then((answers) => {
-      projectInfo = answers;
-      let textContent = mdGenerator(projectInfo);
-      writeToFile("test.md", textContent);
+      console.log(answers);
+      let content = mdGenerator.generateMarkdown(answers);
+      console.log(content);
+      writeToFile("test.md", content);
     })
     .catch((error) => {
       if (error.isTtyError) {
         // Prompt couldn't be rendered in the current environment
+        console.log(error);
       } else {
-        // Something else went wrong
+        console.log("An unknown error has occurred. Sorry about that!");
       }
     });
 };
 
 // TODO: Create a function to write README file
 function writeToFile(fileName, data) {
-  fs.writeFile(fileName, data, (err) => {});
+  fs.writeFile("./output/" + fileName, data, (err) => {
+    if (err) {
+      console.log(err);
+      console.log("Something went wrong creating the file.");
+    }
+  });
 }
 
 // TODO: Create a function to initialize app
