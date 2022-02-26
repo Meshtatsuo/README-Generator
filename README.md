@@ -14,4 +14,4 @@ This application allows a user to generate a README.md file given the user submi
 
 ## Preview
 
-<b>Video preview: </b>TODO: CREATE AND LINK VIDEO PREVIEW
+<b>Video preview: </b> https://www.youtube.com/watch?v=zWjCr-OSI-8
