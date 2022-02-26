@@ -1,10 +1,9 @@
-// TODO: Include packages needed for this application
+// Include packages needed for application
 const fs = require("fs");
 const inquirer = require("inquirer");
 const mdGenerator = require("./utils/generateMarkdown.js");
-let projectInfo = [];
-let featureList = [];
-// TODO: Create an array of questions for user input
+
+// Inquirer question prompts
 const promptProjectInfo = () => {
   inquirer
     .prompt([
@@ -69,32 +68,35 @@ const promptProjectInfo = () => {
       },
     ])
     .then((answers) => {
-      console.log(answers);
+      // After receving user input, generate markdown
+      // and write markdown to a "README.md" file
       let content = mdGenerator.generateMarkdown(answers);
       console.log(content);
-      writeToFile("test.md", content);
+      writeToFile("README.md", content);
     })
     .catch((error) => {
       if (error.isTtyError) {
-        // Prompt couldn't be rendered in the current environment
+        // prompt error, log to screen
         console.log(error);
       } else {
+        // something unknown happens, in which case log an unknown error occurred
         console.log("An unknown error has occurred. Sorry about that!");
       }
     });
 };
 
-// TODO: Create a function to write README file
+// Writes markdown content to file in the /output/ folder.
 function writeToFile(fileName, data) {
   fs.writeFile("./output/" + fileName, data, (err) => {
     if (err) {
+      // If something goes wrong, log error to screen and let user know
       console.log(err);
       console.log("Something went wrong creating the file.");
     }
   });
 }
 
-// TODO: Create a function to initialize app
+// Begin prompting user on initialization
 function init() {
   promptProjectInfo();
 }

@@ -1,4 +1,4 @@
-// TODO: Create a function that returns the license link
+// Returns the license link
 // If there is no license, return an empty string
 function renderLicenseBadge(license) {
   switch (license) {
@@ -18,7 +18,8 @@ function renderLicenseBadge(license) {
       return "";
   }
 }
-
+// Returns a link to the appropriate license.
+// Returns empty string if no license
 function renderLicenseLink(license) {
   switch (license) {
     case "Apache License 2.0":
@@ -37,9 +38,7 @@ function renderLicenseLink(license) {
       return "";
   }
 }
-// Render Project Info
-
-// TODO: Create a function that returns the license section of README
+// Returns the license section of README
 // If there is no license, return an empty string
 function renderLicenseSection(license) {
   const badge = renderLicenseBadge(license);
@@ -56,7 +55,9 @@ function renderLicenseSection(license) {
   }
 }
 
-//
+// Generate contents for README Features
+// Based on user input, will also generate Table
+// of Contents of sections that received values
 function generateFeatureList(data) {
   let install = "";
   let installHead = "";
@@ -68,43 +69,42 @@ function generateFeatureList(data) {
   let testHead = "";
   let tableOfContents = [];
   let tableOfContentsHead = "";
+  //Table of contents sections
   // Check if content is in each section, then add data to sections with content
   if (data.install) {
-    tableOfContents.push("### • [Install](#Install)");
+    tableOfContents.push("• [Install](#Install) <br> ");
     installHead = "## Installation";
     install = data.install;
   }
   if (data.usage) {
-    tableOfContents.push("### • [Usage](#Usage)");
+    tableOfContents.push("• [Usage](#Usage) <br> ");
     usageHead = "## Usage";
     usage = data.usage;
   }
   if (data.contributing) {
-    tableOfContents.push("### • [Contributing](#Contributing)");
+    tableOfContents.push("• [Contributing](#Contributing) <br> ");
     contributingHead = "## Contributing";
     contributing = data.contributing;
   }
   if (data.testInstructions) {
-    tableOfContents.push("### • [Testing](#Testing)");
+    tableOfContents.push("• [Testing](#Testing) <br> ");
     testHead = "## Testing";
     testInstructions = data.testInstructions;
   }
   if (data.license) {
-    tableOfContents.push("### • [Licensing](#Licensing)");
+    tableOfContents.push("• [Licensing](#Licensing) <br> ");
     // No need to add content here as we have seperate functions for that.
     // Only need to add licensing to the table of contents
   }
+
   if (tableOfContents.length >= 0) {
     tableOfContentsHead = "## Table of Contents";
   }
   return `
   ${tableOfContentsHead}
 
-  ${tableOfContents[0]}
-  ${tableOfContents[1]}
-  ${tableOfContents[2]}
-  ${tableOfContents[3]}
-  ${tableOfContents[4]}
+  ${tableOfContents.join("")}
+  
 
   ${installHead}
   ${install}
@@ -120,7 +120,7 @@ function generateFeatureList(data) {
   `;
 }
 
-// TODO: Create a function to generate markdown for README
+// Generates markdown for the README
 function generateInfoMarkdown(data) {
   const licenseSection = renderLicenseSection(data.license);
   const featureList = generateFeatureList(data);
